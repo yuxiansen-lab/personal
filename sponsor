@@ -1,1 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        div {
+            display: inline-block;
+            margin: 20px;
+        }
+        img {
+            width: 200px;
+            height: 200px;
+        }
+        select {
+            margin: 20px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 语言选择器 -->
+    <select id="languageSelector">
+        <option value="en">English</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+    </select>
 
+    <!-- 页面内容 -->
+    <h1 id="title">Sponsor Support</h1>
+    <p id="description">Thank you for your support! Your sponsorship will help us continue to improve and provide better services.</p>
+    <div>
+        <h2 id="wechatTitle">WeChat Sponsorship</h2>
+        <img id="wechatImg" src="wechat_qr.png" alt="WeChat Sponsorship QR Code">
+    </div>
+    <div>
+        <h2 id="alipayTitle">Alipay Sponsorship</h2>
+        <img id="alipayImg" src="alipay_qr.png" alt="Alipay Sponsorship QR Code">
+    </div>
+
+    <script>
+        // 多语言内容
+        const languages = {
+            en: {
+                title: "Sponsor Support",
+                description: "Thank you for your support! Your sponsorship will help us continue to improve and provide better services.",
+                wechatTitle: "WeChat Sponsorship",
+                alipayTitle: "Alipay Sponsorship",
+                wechatAlt: "WeChat Sponsorship QR Code",
+                alipayAlt: "Alipay Sponsorship QR Code"
+            },
+            zh: {
+                title: "赞助支持",
+                description: "感谢您的支持！您的赞助将帮助我们持续改进和提供更好的服务。",
+                wechatTitle: "微信赞助",
+                alipayTitle: "支付宝赞助",
+                wechatAlt: "微信赞助二维码",
+                alipayAlt: "支付宝赞助二维码"
+            },
+            ja: {
+                title: "スポンサーサポート",
+                description: "ご支援ありがとうございます！あなたのスポンサーシップは、私たちが継続的に改善し、より良いサービスを提供するのに役立ちます。",
+                wechatTitle: "WeChatスポンサーシップ",
+                alipayTitle: "Alipayスポンサーシップ",
+                wechatAlt: "WeChatスポンサーシップQRコード",
+                alipayAlt: "AlipayスポンサーシップQRコード"
+            }
+        };
+
+        // 获取页面元素
+        const langSelector = document.getElementById('languageSelector');
+        const title = document.getElementById('title');
+        const description = document.getElementById('description');
+        const wechatTitle = document.getElementById('wechatTitle');
+        const alipayTitle = document.getElementById('alipayTitle');
+        const wechatImg = document.getElementById('wechatImg');
+        const alipayImg = document.getElementById('alipayImg');
+
+        // 切换语言函数
+        function switchLanguage(lang) {
+            const content = languages[lang];
+            title.textContent = content.title;
+            description.textContent = content.description;
+            wechatTitle.textContent = content.wechatTitle;
+            alipayTitle.textContent = content.alipayTitle;
+            wechatImg.alt = content.wechatAlt;
+            alipayImg.alt = content.alipayAlt;
+            document.documentElement.lang = lang; // 更新html的lang属性
+        }
+
+        // 监听语言选择器变化
+        langSelector.addEventListener('change', function() {
+            switchLanguage(this.value);
+        });
+
+        // 设置默认语言为英语
+        window.addEventListener('load', function() {
+            switchLanguage('en');
+            langSelector.value = 'en'; // 下拉菜单默认选中英语
+        });
+    </script>
+</body>
+</html>
