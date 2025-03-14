@@ -43,11 +43,11 @@
     <p id="description">Thank you for your support! Your sponsorship will help us continue to improve and provide better services.</p>
     <div>
         <h2 id="wechatTitle">WeChat Sponsorship</h2>
-        <img id="wechatImg" src="wechat_qr.png" alt="WeChat Sponsorship QR Code">
+        <img id="wechatImg" src="IMG_1338.jpeg" alt="WeChat Sponsorship QR Code">
     </div>
     <div>
         <h2 id="alipayTitle">Alipay Sponsorship</h2>
-        <img id="alipayImg" src="alipay_qr.png" alt="Alipay Sponsorship QR Code">
+        <img id="alipayImg" src="IMG_1339.jpeg" alt="Alipay Sponsorship QR Code">
     </div>
 
     <script>
