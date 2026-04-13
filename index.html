@@ -1,87 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="zh-CN">
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <meta name="generator" content="Astro v2.3.4">
-    <title>Hi, I&#39;m Xiansen Yu</title>
-  <link rel="stylesheet" href="index.css" /><script type="module">kofiWidgetOverlay.draw("xhofe",{type:"floating-chat","floating-chat.donateButton.text":"Support Me","floating-chat.donateButton.background-color":"#00b9fe","floating-chat.donateButton.text-color":"#fff"});
-</script></head>
-  <body>
-    
-  <main class="astro-J7PV25F6">
-    <h1 class="astro-J7PV25F6">Hello, I'm <span class="text-gradient astro-J7PV25F6">Xiansen Yu</span></h1>
-    <p class="instructions astro-J7PV25F6">
-      <strong class="astro-J7PV25F6">A front-end </strong>
-      <code class="astro-J7PV25F6">engineer</code><strong class="astro-J7PV25F6"></strong>.
-    </p>
-    <a class="inline-flex text-current px-3 py-2 mt-2 mr-2 rounded-md transition-colors decoration-none hover:bg-gray-700 dark:hover:bg-white dark:hover:text-gray-900 hover:text-white" bg="gray-500/20 dark:gray-400/20" href="https://github.com/yuxiansen-lab" target="_blank">
-  <div text-lg>
-    <div class="i-ri-github-fill"></div>
-  </div>
-  <div text-sm ml-1 font-500>
-        Github
-      </div>
-</a>
-<a class="inline-flex text-current px-3 py-2 mt-2 mr-2 rounded-md transition-colors decoration-none hover:bg-[#00ACEE] hover:text-white" bg="gray-500/20 dark:gray-400/20" href="https://x.com/XiansenYu0" target="_blank">
-  <div text-lg>
-    <div class="i-ri-twitter-fill"></div>
- </div>
-  
-</a><a class="inline-flex text-current px-3 py-2 mt-2 mr-2 rounded-md transition-colors decoration-none hover:bg-[#00b0ff] hover:text-white" bg="gray-500/20 dark:gray-400/20" href="mailto:yuxiansen@my.com" target="_blank">
-  <div text-lg>
-    <div class="i-ri-mail-fill"></div>
-  </div>
-  
-</a><a class="inline-flex text-current px-3 py-2 mt-2 mr-2 rounded-md transition-colors decoration-none hover:bg-red-4 hover:text-white" bg="gray-500/20 dark:gray-400/20" href="sponsor.html" target="_blank">
-  <div text-lg>
-    <div class="i-twemoji:money-bag"></div>
-  </div>
-  
-</a>
-    <img w-full src="https://jsd.nn.ci/gh/Xhofe/Xhofe@main/out/github-snake-dark.svg" class="astro-J7PV25F6">
-    <h3 class="flex items-center mt-8 mb-4 font-semibold text-2xl">
-  <span flex-1 class="outfit">💻Projects</span>
-  <a href="https://github.com/yuxiansen-lab" target="_blank" color-white class="op-50 ml-2 hover:op-100 transition-opacity cursor-pointer">
-    <div class="m-2 i-ri-arrow-right-up-line"></div>
-  </a>
-</h3>
-<div class="grid gap-4 grid-cols-1 sm:grid-cols-2">
-  
-  
-<a class="px-4 py-3 text-current rounded-md transition-colors decoration-none" bg="gray-400/10 hover:gray-400/20 " href="https://heartstopper.top/" target="_blank">
-  <div class="flex h-full items-center justify-center">
-    <div flex-1 flex="~ col gap-1">
-      <div font-medium leading-relaxed flex items-center justify-between>
-        <span>Heartstopper Fan Fan Call for Submissions</span>
-        <!-- <img h-full src={`https://img.shields.io/github/stars/${repo}?color=%237b50c7`} alt=""> -->
-      </div>
-      <div op-50 font-normal text-sm>
-        If you are a fan of Heartstopper, you can choose to join us and upload your own works, purely voluntary, thanks for participating!
-      </div>
-    </div>
-    <div ml-4 text-4xl op-80>
-      <div class="i-twemoji-framed-picture"></div>
-    </div>
-  </div>
-</a>
-</div>
-
-
-    <h3 text-2xl>⚡Skills</h3>
-<img w-full src="https://skillicons.dev/icons?perline=14&i=discord,github,html,js,linux,mysql,nginx,nodejs,py,js,svg,twitter,vscode" alt="">
-    <footer mt-12 class="astro-J7PV25F6">
-      <p text-sm op-40 class="astro-J7PV25F6">Xiansen Yu © 2024</p>
-    </footer>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pure | [XiansenYu]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
     <style>
-      .floatingchat-container-wrap,
-      .floating-chat-kofi-popup-iframe {
-        right: 16px;
-        left: unset;
-      }
+        :root {
+            --bg: #ffffff;
+            --main: #1a1a1a;
+            --sub: #86868b;
+            --accent: #0071e3;
+            --line: #efeff0;
+            --bezier: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #000000;
+                --main: #f5f5f7;
+                --sub: #6e6e73;
+                --line: #1c1c1e;
+                --accent: #2997ff;
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            transition: background-color 0.8s var(--bezier);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .serif { font-family: 'Noto Serif SC', serif; }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 18vh 30px 10vh;
+        }
+
+        /* --- 核心动画：入场 --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: revealUp 1s var(--bezier) forwards;
+        }
+        @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* --- 动态 # 号：点击激活逻辑 --- */
+        .interactive-area {
+            position: relative;
+            cursor: pointer;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .hash-tag {
+            position: absolute;
+            left: -25px;
+            color: var(--accent);
+            font-weight: 300;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.4s var(--bezier);
+            pointer-events: none;
+        }
+
+        /* 激活态样式 */
+        .is-active .hash-tag {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- 文字排版 --- */
+        header { margin-bottom: 12vh; }
+        h1 { font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.3; font-weight: 500; }
+
+        .philosophy { margin-bottom: 12vh; }
+        .philosophy blockquote {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            padding-left: 20px;
+            border-left: 1px solid var(--line);
+        }
+
+        /* --- 纯文字联系方式 --- */
+        .contact-list {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: opacity 0.3s;
+        }
+
+        .contact-item:active { opacity: 0.5; }
+
+        .label {
+            display: block;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--sub);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .value {
+            font-size: 1.05rem;
+            font-weight: 400;
+        }
+
+        footer {
+            margin-top: 15vh;
+            font-size: 0.75rem;
+            color: var(--sub);
+        }
+
+        @media (max-width: 600px) {
+            .hash-tag { left: -20px; }
+            .container { padding-top: 12vh; }
+        }
     </style>
+</head>
+<body>
 
-    
-  </main>
+    <div class="container">
+        <header class="reveal">
+            <div class="interactive-area" onclick="handleActive(this)">
+                <span class="hash-tag">#</span>
+                <h1 class="serif">万物皆有裂痕，<br>那是光照进来的地方。</h1>
+            </div>
+            <p style="color: var(--sub); margin-top: 20px;">我是 XiansenYu，独立开发者。</p>
+        </header>
 
-  </body></html>
+        <section class="philosophy reveal" style="animation-delay: 0.2s;">
+            <div class="interactive-area" onclick="handleActive(this)">
+                <span class="hash-tag">#</span>
+                <span style="font-size: 0.7rem; letter-spacing: 0.2em; color: var(--sub);">PHILOSOPHY</span>
+            </div>
+            <blockquote class="serif">“美不是往上增添，<br>而是当无法再减少时的纯粹。”</blockquote>
+        </section>
+
+        <section class="reveal" style="animation-delay: 0.4s;">
+            <div class="interactive-area" onclick="handleActive(this)">
+                <span class="hash-tag">#</span>
+                <span style="font-size: 0.7rem; letter-spacing: 0.2em; color: var(--sub);">CONNECTION</span>
+            </div>
+            
+            <div class="contact-list">
+                <a href="mailto:yuxiansen@my.com" class="contact-item">
+                    <span class="label">Email</span>
+                    <span class="value">yuxiansen@my.com</span>
+                </a>
+                <a href="https://github.com/yuxiansen-lab/" class="contact-item">
+                    <span class="label">GitHub</span>
+                    <span class="value">@yuxiansen-lab</span>
+                </a>
+                <a href="https://x.com/YuYxsen" class="contact-item">
+                    <span class="label">X</span>
+                    <span class="value">Xiansen Yu</span>
+                </a>
+            </div>
+        </section>
+
+        <footer class="reveal" style="animation-delay: 0.6s;">
+            <p>© 2026 Crafted with Intention.</p>
+        </footer>
+    </div>
+
+    <script>
+        function handleActive(el) {
+            // 1. 寻找当前已经激活的元素
+            const currentActive = document.querySelector('.is-active');
+            
+            // 2. 如果点击的是同一个已经激活的，就关掉它
+            if (currentActive === el) {
+                el.classList.remove('is-active');
+            } else {
+                // 3. 如果点击的是新的，先关掉旧的，再开启新的
+                if (currentActive) {
+                    currentActive.classList.remove('is-active');
+                }
+                el.classList.add('is-active');
+            }
+        }
+    </script>
+</body>
+</html>
