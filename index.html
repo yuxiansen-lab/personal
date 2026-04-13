@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pure | XiansenYu</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #ffffff;
@@ -121,6 +124,16 @@
         footer { margin-top: 15vh; font-size: 0.75rem; color: var(--sub); }
 
         @media (max-width: 600px) { .hash-tag { left: -20px; } }
+        
+        .google-sans {
+              font-family: "Google Sans", sans-serif;
+              font-optical-sizing: auto;
+              font-weight: <weight>;
+              font-style: normal;
+              font-variation-settings:
+              "GRAD" 0;
+        }
+        
     </style>
 </head>
 <body>
@@ -150,8 +163,8 @@
             
             <div class="list-stack">
                 <a href="mailto:yuxiansen@my.com" class="item">
-                    <span class="label">Email</span>
-                    <span class="value">yuxiansen@my.com</span>
+                    <span class="label google-sans">Email</span>
+                    <span class="value google-sans">yuxiansen@my.com</span>
                 </a>
 
                 <div class="item" onclick="openSponsor()">
@@ -160,13 +173,13 @@
                 </div>
 
                 <a href="https://github.com/yuxiansen-lab" class="item">
-                    <span class="label">GitHub</span>
-                    <span class="value">@yuxiansen-lab</span>
+                    <span class="label google-sans ">GitHub</span>
+                    <span class="value google-sans ">@yuxiansen-lab</span>
                 </a>
             </div>
         </section>
 
-        <footer class="reveal" style="animation-delay: 0.6s;">
+        <footer class="reveal google-sans" style="animation-delay: 0.6s;">
             <p>© 2026 Crafted with Intention.</p>
         </footer>
     </div>
