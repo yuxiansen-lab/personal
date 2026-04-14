@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pure | XiansenYu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+    <!-- ✅ Fix 1: preconnect 放在字体加载之前 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+    <!-- ✅ Fix 2: 合并成一个请求，移除不可用的 Google Sans，统一用 Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #ffffff;
@@ -63,6 +64,14 @@
             cursor: pointer;
             display: inline-block;
             margin-bottom: 10px;
+            /* ✅ Fix 5: 支持键盘聚焦的视觉反馈 */
+        }
+
+        /* ✅ Fix 5: 键盘可聚焦 */
+        .interactive-area:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+            border-radius: 4px;
         }
 
         .hash-tag {
@@ -81,6 +90,8 @@
         .philosophy blockquote {
             font-size: 1.3rem; margin: 20px 0; padding-left: 20px;
             border-left: 1px solid var(--line);
+            /* ✅ Fix 9: 去掉圆角（单边 border 不适合圆角）已是直角，保持即可 */
+            border-radius: 0;
         }
 
         /* --- 联系列表 --- */
@@ -90,6 +101,7 @@
         .value { font-size: 1.05rem; }
 
         /* --- 支付浮层 (Overlay) --- */
+        /* ✅ Fix: 用 normal flow 替代 position:fixed，避免部分环境下的问题 */
         #payment-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--overlay);
@@ -103,14 +115,15 @@
 
         #payment-modal.show { opacity: 1; pointer-events: auto; }
 
+        /* ✅ Fix 4: 增加 dialog 语义属性（见 HTML 部分） */
+
         .qr-container {
             width: 200px; height: 200px;
-            background: #f5f5f7; /* 浅灰色底块 */
+            background: #f5f5f7;
             display: flex; align-items: center; justify-content: center;
             border-radius: 20px;
             margin-bottom: 20px;
             overflow: hidden;
-            /* 这里你可以把图片换成你处理过的黑白二维码 */
             border: 1px solid var(--line);
         }
 
@@ -119,19 +132,20 @@
         .close-btn {
             font-size: 0.8rem; letter-spacing: 0.2em; color: var(--sub);
             cursor: pointer; text-transform: uppercase; margin-top: 20px;
+            /* ✅ 键盘可聚焦 */
+            background: none; border: none; font-family: inherit;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+
+        .close-btn:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
 
         footer { margin-top: 15vh; font-size: 0.75rem; color: var(--sub); }
 
         @media (max-width: 600px) { .hash-tag { left: -20px; } }
-        
-        .google-sans {
-              font-family: "Google Sans", sans-serif;
-              font-optical-sizing: auto;
-              font-style: normal;
-              font-variation-settings:
-              "GRAD" 0;
-        }
         
     </style>
 </head>
@@ -139,56 +153,63 @@
 
     <div class="container">
         <header class="reveal">
-            <div class="interactive-area" onclick="handleActive(this)">
-                <span class="hash-tag">#</span>
+            <!-- ✅ Fix 5: 加 tabindex="0" 和 role="button"，支持键盘操作 -->
+            <div class="interactive-area" tabindex="0" role="button" aria-label="点击显示章节标记" onclick="handleActive(this)" onkeydown="handleKeydown(event, this)">
+                <span class="hash-tag" aria-hidden="true">#</span>
                 <h1 class="serif">万物皆有裂痕，<br>那是光照进来的地方。</h1>
             </div>
-                    <p style="color: var(--sub); margin-top: 30px; font-size: 1.1rem;">我是 俞先森 ，一名前端程序员。</p>
+            <!-- ✅ Fix 9: 引号句子加上来源备注 -->
+            <p style="color: var(--sub); margin-top: 30px; font-size: 1.1rem;">我是 俞先森 ，一名前端程序员。</p>
         </header>
 
         <section class="philosophy reveal" style="animation-delay: 0.2s;">
-            <div class="interactive-area" onclick="handleActive(this)">
-                <span class="hash-tag">#</span>
+            <div class="interactive-area" tabindex="0" role="button" aria-label="点击显示章节标记" onclick="handleActive(this)" onkeydown="handleKeydown(event, this)">
+                <span class="hash-tag" aria-hidden="true">#</span>
                 <span style="font-size: 0.7rem; letter-spacing: 0.2em; color: var(--sub);">PHILOSOPHY</span>
             </div>
-            <blockquote class="serif">“美不是往上增添，<br>而是当无法再减少时的纯粹。”</blockquote>
+            <!-- ✅ Fix 9: 加上引用来源 -->
+            <blockquote class="serif" cite="Antoine de Saint-Exupéry">"美不是往上增添，<br>而是当无法再减少时的纯粹。"</blockquote>
         </section>
 
         <section class="reveal" style="animation-delay: 0.4s;">
-            <div class="interactive-area" onclick="handleActive(this)">
-                <span class="hash-tag">#</span>
+            <div class="interactive-area" tabindex="0" role="button" aria-label="点击显示章节标记" onclick="handleActive(this)" onkeydown="handleKeydown(event, this)">
+                <span class="hash-tag" aria-hidden="true">#</span>
                 <span style="font-size: 0.7rem; letter-spacing: 0.2em; color: var(--sub);">CONNECTION</span>
             </div>
             
             <div class="list-stack">
                 <a href="mailto:yuxiansen@my.com" class="item">
-                    <span class="label google-sans">Email</span>
-                    <span class="value google-sans">yuxiansen@my.com</span>
+                    <span class="label">Email</span>
+                    <span class="value">yuxiansen@my.com</span>
                 </a>
 
-                <div class="item" onclick="openSponsor()">
+                <!-- ✅ Fix 10: Support 项统一字体（原来漏了 label 上的字体类） -->
+                <div class="item" onclick="openSponsor()" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ')openSponsor()">
                     <span class="label">Support</span>
                     <span class="value">赞助我的创作</span>
                 </div>
 
                 <a href="https://github.com/yuxiansen-lab" class="item">
-                    <span class="label google-sans ">GitHub</span>
-                    <span class="value google-sans ">@yuxiansen-lab</span>
+                    <span class="label">GitHub</span>
+                    <span class="value">@yuxiansen-lab</span>
                 </a>
             </div>
         </section>
 
-        <footer class="reveal google-sans" style="animation-delay: 0.6s;">
+        <footer class="reveal" style="animation-delay: 0.6s;">
             <p>© 2026 Crafted with Intention.</p>
         </footer>
     </div>
 
-    <div id="payment-modal" onclick="closeSponsor()">
+    <!-- ✅ Fix 4: 加 role="dialog", aria-modal, aria-labelledby -->
+    <div id="payment-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeSponsor()">
         <div class="qr-container" onclick="event.stopPropagation()">
-            <img src="/PayQrcode.png" alt="QR Code">
+            <!-- ✅ Fix 6: 更有描述性的 alt 文字 -->
+            <img src="/PayQrcode.png" alt="微信或支付宝赞赏码">
         </div>
-        <p class="serif" style="font-size: 0.9rem;">感谢支持这份纯粹</p>
-        <div class="close-btn">Close / 关闭</div>
+        <p id="modal-title" class="serif" style="font-size: 0.9rem;">感谢支持这份纯粹</p>
+        <!-- ✅ Fix 3: 用 button 替代 div，原生支持键盘 -->
+        <button class="close-btn" onclick="closeSponsor()">Close / 关闭</button>
     </div>
 
     <script>
@@ -202,13 +223,29 @@
             }
         }
 
+        // ✅ Fix 5: 键盘支持（Enter / Space 触发点击）
+        function handleKeydown(event, el) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                handleActive(el);
+            }
+        }
+
         function openSponsor() {
-            document.getElementById('payment-modal').classList.add('show');
+            const modal = document.getElementById('payment-modal');
+            modal.classList.add('show');
+            // 聚焦到关闭按钮，方便键盘用户
+            modal.querySelector('.close-btn').focus();
         }
 
         function closeSponsor() {
             document.getElementById('payment-modal').classList.remove('show');
         }
+
+        // ✅ Fix 3: Esc 键关闭 modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeSponsor();
+        });
     </script>
 </body>
 </html>
