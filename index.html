@@ -3,31 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pure | XiansenYu</title>
-    <!-- ✅ Fix 1: preconnect 放在字体加载之前 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- ✅ Fix 2: 合并成一个请求，移除不可用的 Google Sans，统一用 Inter -->
+    <title>Quiet | Archive</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
     <style>
+
         :root {
             --bg: #ffffff;
             --main: #1a1a1a;
             --sub: #86868b;
             --accent: #0071e3;
-            --line: #efeff0;
-            --bezier: cubic-bezier(0.4, 0, 0.2, 1);
-            --overlay: rgba(255, 255, 255, 0.95);
+            --line: #f2f2f7;
+            --apple-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+            --modal-ease: cubic-bezier(0.3, 1, 0.2, 1);
         }
 
+
+        body.theme-dark {
+            --bg: #000000;
+            --main: #f5f5f7;
+            --sub: #86868b;
+            --line: #1c1c1e;
+        }
+
+
         @media (prefers-color-scheme: dark) {
-            :root {
+            body:not(.theme-light) {
                 --bg: #000000;
                 --main: #f5f5f7;
-                --sub: #6e6e73;
+                --sub: #86868b;
                 --line: #1c1c1e;
-                --accent: #2997ff;
-                --overlay: rgba(0, 0, 0, 0.95);
             }
         }
 
@@ -37,7 +41,7 @@
             background-color: var(--bg);
             color: var(--main);
             font-family: 'Inter', -apple-system, sans-serif;
-            transition: background-color 0.8s var(--bezier);
+            transition: background-color 1s var(--apple-ease), color 1s var(--apple-ease);
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -45,174 +49,229 @@
         .serif { font-family: 'Noto Serif SC', serif; }
 
         .container {
-            max-width: 650px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 18vh 30px 10vh;
+            padding: 15vh 30px 10vh;
         }
 
-        /* --- 动画：入场 --- */
+
         .reveal {
             opacity: 0;
             transform: translateY(20px);
-            animation: revealUp 1s var(--bezier) forwards;
+            animation: appleReveal 1.2s var(--apple-ease) forwards;
         }
-        @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes appleReveal { to { opacity: 1; transform: translateY(0); } }
 
-        /* --- 动态 # 号 --- */
+
+        .meta-header {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: var(--sub);
+            text-transform: uppercase;
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.5s var(--apple-ease), color 0.3s;
+        }
+        .theme-toggle:active { transform: scale(0.8) rotate(180deg); }
+        .theme-toggle:hover { color: var(--main); }
+
+
         .interactive-area {
             position: relative;
             cursor: pointer;
             display: inline-block;
-            margin-bottom: 10px;
-            /* ✅ Fix 5: 支持键盘聚焦的视觉反馈 */
+            transition: transform 0.2s var(--apple-ease);
         }
-
-        /* ✅ Fix 5: 键盘可聚焦 */
-        .interactive-area:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 4px;
-            border-radius: 4px;
-        }
+        .interactive-area:active { transform: scale(0.98); }
 
         .hash-tag {
-            position: absolute; left: -25px; color: var(--accent);
-            font-weight: 300; opacity: 0; transform: translateX(10px);
-            transition: all 0.4s var(--bezier); pointer-events: none;
+            position: absolute; left: -28px; color: var(--accent);
+            font-weight: 300; opacity: 0; transform: translateX(8px);
+            transition: all 0.4s var(--apple-ease);
         }
-
         .is-active .hash-tag { opacity: 1; transform: translateX(0); }
 
-        /* --- 排版 --- */
-        header { margin-bottom: 10vh; }
-        h1 { font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.3; font-weight: 500; }
-        
-        .philosophy { margin-bottom: 10vh; }
+
+        header { margin-bottom: 12vh; }
+        h1 { font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.3; font-weight: 500; letter-spacing: -0.02em; }
+
+        .philosophy { margin-bottom: 12vh; }
         .philosophy blockquote {
-            font-size: 1.3rem; margin: 20px 0; padding-left: 20px;
+            font-size: 1.4rem; margin: 25px 0; padding-left: 20px;
             border-left: 1px solid var(--line);
-            /* ✅ Fix 9: 去掉圆角（单边 border 不适合圆角）已是直角，保持即可 */
-            border-radius: 0;
+            transition: border-color 1s var(--apple-ease);
         }
 
-        /* --- 联系列表 --- */
-        .list-stack { display: flex; flex-direction: column; gap: 25px; }
-        .item { text-decoration: none; color: inherit; display: block; cursor: pointer; }
-        .label { display: block; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; }
-        .value { font-size: 1.05rem; }
 
-        /* --- 支付浮层 (Overlay) --- */
-        /* ✅ Fix: 用 normal flow 替代 position:fixed，避免部分环境下的问题 */
-        #payment-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--overlay);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.5s var(--bezier);
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        .contact-list { margin-top: 30px; display: flex; flex-direction: column; gap: 32px; }
+        .contact-item { text-decoration: none; color: inherit; display: block; cursor: pointer; }
+        
+        .label { display: block; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; }
+        .value { font-size: 1.1rem; font-weight: 400; transition: opacity 0.3s var(--apple-ease); }
+        .contact-item:active .value { opacity: 0.4; }
+
+
+        #full-sponsor {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--bg);
+            color: var(--main);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* 初始状态在屏幕正下方 */
+            transform: translateY(100vh);
+            transition: transform 0.8s var(--modal-ease), background-color 1s var(--apple-ease);
+            will-change: transform;
         }
 
-        #payment-modal.show { opacity: 1; pointer-events: auto; }
+        #full-sponsor.active { transform: translateY(0); }
 
-        /* ✅ Fix 4: 增加 dialog 语义属性（见 HTML 部分） */
+        .sponsor-inner { text-align: center; }
 
-        .qr-container {
+        .qr-placeholder {
             width: 200px; height: 200px;
+            margin: 0 auto 40px;
             background: #f5f5f7;
-            display: flex; align-items: center; justify-content: center;
             border-radius: 20px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            border: 1px solid var(--line);
+            display: flex; align-items: center; justify-content: center;
+            color: #ccc; font-size: 11px; letter-spacing: 0.1em;
         }
 
-        .qr-container img { width: 85%; height: 85%; filter: grayscale(1); opacity: 0.8; }
-
-        .close-btn {
-            font-size: 0.8rem; letter-spacing: 0.2em; color: var(--sub);
-            cursor: pointer; text-transform: uppercase; margin-top: 20px;
-            /* ✅ 键盘可聚焦 */
-            background: none; border: none; font-family: inherit;
-            padding: 8px 16px;
-            border-radius: 4px;
+        .close-curtain {
+            margin-top: 60px;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            color: var(--sub);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.3s;
         }
-
-        .close-btn:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
+        .close-curtain:hover { color: var(--main); }
 
         footer { margin-top: 15vh; font-size: 0.75rem; color: var(--sub); }
 
-        @media (max-width: 600px) { .hash-tag { left: -20px; } }
-        
+        @media (max-width: 600px) {
+            .hash-tag { left: -22px; }
+            .container { padding-top: 12vh; }
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header class="reveal">
-            <!-- ✅ Fix 5: 加 tabindex="0" 和 role="button"，支持键盘操作 -->
-            <div class="interactive-area" tabindex="0" role="button" aria-label="点击显示章节标记" onclick="handleActive(this)" onkeydown="handleKeydown(event, this)">
-                <span class="hash-tag" aria-hidden="true">#</span>
-                <h1 class="serif">万物皆有裂痕，<br>那是光照进来的地方。</h1>
+        <div class="meta-header reveal">
+            <span id="clock">00:00:00</span>
+            <span class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">○</span>
+        </div>
+
+        <header class="reveal" style="animation-delay: 0.1s;">
+            <div class="interactive-area" onclick="handleActive(this)">
+                <span class="hash-tag">#</span>
+                <h1 class="serif">塑造逻辑，<br>也塑造留白。</h1>
             </div>
-            <!-- ✅ Fix 9: 引号句子加上来源备注 -->
+
             <p style="color: var(--sub); margin-top: 30px; font-size: 1.1rem;">我是 俞先森 ，一名前端程序员。</p>
         </header>
 
         <section class="philosophy reveal" style="animation-delay: 0.2s;">
-            <div class="interactive-area" tabindex="0" role="button" aria-label="点击显示章节标记" onclick="handleActive(this)" onkeydown="handleKeydown(event, this)">
-                <span class="hash-tag" aria-hidden="true">#</span>
+            <div class="interactive-area" onclick="handleActive(this)">
+                <span class="hash-tag">#</span>
                 <span style="font-size: 0.7rem; letter-spacing: 0.2em; color: var(--sub);">PHILOSOPHY</span>
             </div>
-            <!-- ✅ Fix 9: 加上引用来源 -->
-            <blockquote class="serif" cite="Antoine de Saint-Exupéry">"美不是往上增添，<br>而是当无法再减少时的纯粹。"</blockquote>
+            <blockquote class="serif">“美不是往上增添，<br>而是当无法再减少时的纯粹。”</blockquote>
         </section>
 
-        <section class="reveal" style="animation-delay: 0.4s;">
-            <div class="interactive-area" tabindex="0" role="button" aria-label="点击显示章节标记" onclick="handleActive(this)" onkeydown="handleKeydown(event, this)">
-                <span class="hash-tag" aria-hidden="true">#</span>
+        <section class="reveal" style="animation-delay: 0.3s;">
+            <div class="interactive-area" onclick="handleActive(this)">
+                <span class="hash-tag">#</span>
                 <span style="font-size: 0.7rem; letter-spacing: 0.2em; color: var(--sub);">CONNECTION</span>
             </div>
             
-            <div class="list-stack">
-                <a href="mailto:yuxiansen@my.com" class="item">
+            <div class="contact-list">
+                <a href="mailto:yuxiansen@my.com" class="contact-item">
                     <span class="label">Email</span>
                     <span class="value">yuxiansen@my.com</span>
                 </a>
 
-                <!-- ✅ Fix 10: Support 项统一字体（原来漏了 label 上的字体类） -->
-                <div class="item" onclick="openSponsor()" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ')openSponsor()">
+                <a href="https://github.com/yuxiansen-lab" class="contact-item">
+                    <span class="label">Github</span>
+                    <span class="value">yuxiansen-lab</span>
+                </a>
+
+                <div class="contact-item" onclick="openSponsor()">
                     <span class="label">Support</span>
                     <span class="value">赞助我的创作</span>
                 </div>
 
-                <a href="https://github.com/yuxiansen-lab" class="item">
-                    <span class="label">GitHub</span>
-                    <span class="value">@yuxiansen-lab</span>
-                </a>
+                <div class="contact-item" onclick="copyLink(this)">
+                    <span class="label">Share</span>
+                    <span class="value" id="share-text">复制主页链接</span>
+                </div>
             </div>
         </section>
 
-        <footer class="reveal" style="animation-delay: 0.6s;">
+        <footer class="reveal" style="animation-delay: 0.4s;">
             <p>© 2026 Crafted with Intention.</p>
         </footer>
     </div>
 
-    <!-- ✅ Fix 4: 加 role="dialog", aria-modal, aria-labelledby -->
-    <div id="payment-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeSponsor()">
-        <div class="qr-container" onclick="event.stopPropagation()">
-            <!-- ✅ Fix 6: 更有描述性的 alt 文字 -->
-            <img src="/PayQrcode.png" alt="微信或支付宝赞赏码">
+    <div id="full-sponsor">
+        <div class="sponsor-inner">
+            <div class="qr-placeholder">
+                <img src="/PayQrcode.png" alt="QR CODE">
+                </div>
+            <p class="serif" style="font-size: 1.2rem; margin-bottom: 8px;">感谢这份认可</p>
+            <p style="font-size: 0.85rem; color: var(--sub);">保持简单，保持纯粹</p>
+            <div class="close-curtain" onclick="closeSponsor()">Dismiss — 关闭</div>
         </div>
-        <p id="modal-title" class="serif" style="font-size: 0.9rem;">感谢支持这份纯粹</p>
-        <!-- ✅ Fix 3: 用 button 替代 div，原生支持键盘 -->
-        <button class="close-btn" onclick="closeSponsor()">Close / 关闭</button>
     </div>
 
     <script>
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+
+        function toggleTheme() {
+            const body = document.body;
+            const toggleIcon = document.querySelector('.theme-toggle');
+            
+            if (body.classList.contains('theme-dark')) {
+                body.classList.remove('theme-dark');
+                body.classList.add('theme-light');
+                toggleIcon.innerText = '○';
+            } else if (body.classList.contains('theme-light')) {
+                body.classList.remove('theme-light');
+                body.classList.add('theme-dark');
+                toggleIcon.innerText = '●';
+            } else {
+
+                const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (isSystemDark) {
+                    body.classList.add('theme-light');
+                    toggleIcon.innerText = '○';
+                } else {
+                    body.classList.add('theme-dark');
+                    toggleIcon.innerText = '●';
+                }
+            }
+        }
+
+
         function handleActive(el) {
             const currentActive = document.querySelector('.is-active');
             if (currentActive === el) {
@@ -223,29 +282,40 @@
             }
         }
 
-        // ✅ Fix 5: 键盘支持（Enter / Space 触发点击）
-        function handleKeydown(event, el) {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                handleActive(el);
-            }
-        }
-
         function openSponsor() {
-            const modal = document.getElementById('payment-modal');
-            modal.classList.add('show');
-            // 聚焦到关闭按钮，方便键盘用户
-            modal.querySelector('.close-btn').focus();
+            document.getElementById('full-sponsor').classList.add('active');
+            const currentActive = document.querySelector('.is-active');
+            if (currentActive) currentActive.classList.remove('is-active');
         }
 
         function closeSponsor() {
-            document.getElementById('payment-modal').classList.remove('show');
+            document.getElementById('full-sponsor').classList.remove('active');
         }
 
-        // ✅ Fix 3: Esc 键关闭 modal
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeSponsor();
-        });
+        function copyLink(el) {
+            const shareText = document.getElementById('share-text');
+            const originalText = shareText.innerText;
+            
+            if (originalText === '已复制 Link Copied') return; 
+
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                shareText.style.opacity = '0';
+                setTimeout(() => {
+                    shareText.innerText = '已复制 Link Copied';
+                    shareText.style.color = 'var(--accent)';
+                    shareText.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        shareText.style.opacity = '0';
+                        setTimeout(() => {
+                            shareText.innerText = '复制主页链接';
+                            shareText.style.color = 'inherit';
+                            shareText.style.opacity = '1';
+                        }, 300);
+                    }, 2000);
+                }, 300);
+            });
+        }
     </script>
 </body>
 </html>
