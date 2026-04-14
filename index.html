@@ -6,7 +6,6 @@
     <title>Quiet | Archive</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
     <style>
-
         :root {
             --bg: #ffffff;
             --main: #1a1a1a;
@@ -14,25 +13,15 @@
             --accent: #0071e3;
             --line: #f2f2f7;
             --apple-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-            --modal-ease: cubic-bezier(0.3, 1, 0.2, 1);
+            --modal-ease: cubic-bezier(0.32, 1, 0.24, 1);
         }
 
-
-        body.theme-dark {
+        /* 统一黑暗模式类 */
+        body.dark {
             --bg: #000000;
             --main: #f5f5f7;
             --sub: #86868b;
             --line: #1c1c1e;
-        }
-
-
-        @media (prefers-color-scheme: dark) {
-            body:not(.theme-light) {
-                --bg: #000000;
-                --main: #f5f5f7;
-                --sub: #86868b;
-                --line: #1c1c1e;
-            }
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -41,27 +30,31 @@
             background-color: var(--bg);
             color: var(--main);
             font-family: 'Inter', -apple-system, sans-serif;
-            transition: background-color 1s var(--apple-ease), color 1s var(--apple-ease);
+            transition: background-color 0.8s var(--apple-ease), color 0.8s var(--apple-ease);
             line-height: 1.6;
             overflow-x: hidden;
+            /* 防止弹窗时抖动 */
+            height: 100%;
         }
+
+        /* 锁定背景滚动 */
+        body.locked { overflow: hidden; }
 
         .serif { font-family: 'Noto Serif SC', serif; }
 
         .container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 15vh 30px 10vh;
+            padding: 12vh 30px 10vh;
         }
 
-
+        /* 渐进显现动画 */
         .reveal {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(24px);
             animation: appleReveal 1.2s var(--apple-ease) forwards;
         }
         @keyframes appleReveal { to { opacity: 1; transform: translateY(0); } }
-
 
         .meta-header {
             font-size: 11px;
@@ -76,20 +69,20 @@
 
         .theme-toggle {
             cursor: pointer;
-            font-size: 14px;
-            transition: transform 0.5s var(--apple-ease), color 0.3s;
+            width: 24px; height: 24px;
+            display: flex; align-items: center; justify-content: flex-end;
+            font-size: 16px;
+            transition: transform 0.5s var(--apple-ease);
         }
-        .theme-toggle:active { transform: scale(0.8) rotate(180deg); }
-        .theme-toggle:hover { color: var(--main); }
+        .theme-toggle:active { transform: scale(0.8); }
 
-
+        /* 交互区 */
         .interactive-area {
             position: relative;
             cursor: pointer;
             display: inline-block;
-            transition: transform 0.2s var(--apple-ease);
+            margin-bottom: 8px;
         }
-        .interactive-area:active { transform: scale(0.98); }
 
         .hash-tag {
             position: absolute; left: -28px; color: var(--accent);
@@ -98,80 +91,92 @@
         }
         .is-active .hash-tag { opacity: 1; transform: translateX(0); }
 
+        header { margin-bottom: 10vh; }
+        h1 { font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.25; font-weight: 500; letter-spacing: -0.02em; }
 
-        header { margin-bottom: 12vh; }
-        h1 { font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.3; font-weight: 500; letter-spacing: -0.02em; }
-
-        .philosophy { margin-bottom: 12vh; }
+        .philosophy { margin-bottom: 10vh; }
         .philosophy blockquote {
-            font-size: 1.4rem; margin: 25px 0; padding-left: 20px;
+            font-size: 1.35rem; margin: 24px 0; padding-left: 20px;
             border-left: 1px solid var(--line);
-            transition: border-color 1s var(--apple-ease);
+            transition: border-color 0.8s var(--apple-ease);
         }
 
-
-        .contact-list { margin-top: 30px; display: flex; flex-direction: column; gap: 32px; }
-        .contact-item { text-decoration: none; color: inherit; display: block; cursor: pointer; }
+        /* 列表部分 */
+        .contact-list { display: flex; flex-direction: column; gap: 32px; }
+        .contact-item { text-decoration: none; color: inherit; display: block; }
         
-        .label { display: block; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; }
+        .label { display: block; font-size: 0.7rem; letter-spacing: 0.12em; color: var(--sub); text-transform: uppercase; margin-bottom: 6px; }
         .value { font-size: 1.1rem; font-weight: 400; transition: opacity 0.3s var(--apple-ease); }
         .contact-item:active .value { opacity: 0.4; }
 
-
+        /* 全屏幕布：修复层级和溢出 */
         #full-sponsor {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg);
-            color: var(--main);
-            z-index: 1000;
+            z-index: 2000;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            /* 初始状态在屏幕正下方 */
-            transform: translateY(100vh);
-            transition: transform 0.8s var(--modal-ease), background-color 1s var(--apple-ease);
-            will-change: transform;
+            align-items: center; justify-content: center;
+            transform: translateY(100%);
+            transition: transform 0.8s var(--modal-ease);
+            /* 解决移动端点击穿透 */
+            pointer-events: none;
         }
 
-        #full-sponsor.active { transform: translateY(0); }
+        #full-sponsor.active { 
+            transform: translateY(0); 
+            pointer-events: auto;
+        }
 
-        .sponsor-inner { text-align: center; }
+        .sponsor-inner { 
+            text-align: center; 
+            width: 100%;
+            padding: 40px;
+        }
 
         .qr-placeholder {
-            width: 200px; height: 200px;
-            margin: 0 auto 40px;
+            width: 220px; height: 220px;
+            margin: 0 auto 32px;
             background: #f5f5f7;
-            border-radius: 20px;
+            border-radius: 24px;
             display: flex; align-items: center; justify-content: center;
-            color: #ccc; font-size: 11px; letter-spacing: 0.1em;
+            overflow: hidden;
+            border: 1px solid var(--line);
+        }
+        
+        .qr-placeholder img {
+            width: 85%; height: 85%;
+            object-fit: contain;
+            /* 黑白滤镜增强高级感 */
+            filter: grayscale(1);
+            mix-blend-mode: multiply;
         }
 
         .close-curtain {
-            margin-top: 60px;
-            font-size: 11px;
+            margin-top: 48px;
+            font-size: 12px;
             letter-spacing: 0.2em;
             color: var(--sub);
             text-transform: uppercase;
             cursor: pointer;
-            transition: color 0.3s;
+            padding: 10px;
         }
-        .close-curtain:hover { color: var(--main); }
 
-        footer { margin-top: 15vh; font-size: 0.75rem; color: var(--sub); }
+        footer { margin-top: 15vh; font-size: 0.75rem; color: var(--sub); opacity: 0.8; }
 
         @media (max-width: 600px) {
-            .hash-tag { left: -22px; }
-            .container { padding-top: 12vh; }
+            .hash-tag { display: none; } /* 移动端去掉悬浮的 # 避免排版问题 */
+            .container { padding-top: 10vh; }
         }
     </style>
 </head>
-<body>
+<body id="body">
 
     <div class="container">
         <div class="meta-header reveal">
             <span id="clock">00:00:00</span>
-            <span class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">○</span>
+            <span class="theme-toggle" onclick="toggleTheme()">○</span>
         </div>
 
         <header class="reveal" style="animation-delay: 0.1s;">
@@ -179,14 +184,13 @@
                 <span class="hash-tag">#</span>
                 <h1 class="serif">塑造逻辑，<br>也塑造留白。</h1>
             </div>
-
-            <p style="color: var(--sub); margin-top: 30px; font-size: 1.1rem;">我是 俞先森 ，一名前端程序员。</p>
+            <p style="color: var(--sub); margin-top: 24px; font-size: 1.05rem;">我是 <span style="color:var(--main)">俞先森</span>，一名前端程序员。</p>
         </header>
 
         <section class="philosophy reveal" style="animation-delay: 0.2s;">
             <div class="interactive-area" onclick="handleActive(this)">
                 <span class="hash-tag">#</span>
-                <span style="font-size: 0.7rem; letter-spacing: 0.2em; color: var(--sub);">PHILOSOPHY</span>
+                <span class="label">Philosophy</span>
             </div>
             <blockquote class="serif">“美不是往上增添，<br>而是当无法再减少时的纯粹。”</blockquote>
         </section>
@@ -194,7 +198,7 @@
         <section class="reveal" style="animation-delay: 0.3s;">
             <div class="interactive-area" onclick="handleActive(this)">
                 <span class="hash-tag">#</span>
-                <span style="font-size: 0.7rem; letter-spacing: 0.2em; color: var(--sub);">CONNECTION</span>
+                <span class="label">Connection</span>
             </div>
             
             <div class="contact-list">
@@ -203,7 +207,7 @@
                     <span class="value">yuxiansen@my.com</span>
                 </a>
 
-                <a href="https://github.com/yuxiansen-lab" class="contact-item">
+                <a href="https://github.com/yuxiansen-lab" target="_blank" class="contact-item">
                     <span class="label">Github</span>
                     <span class="value">yuxiansen-lab</span>
                 </a>
@@ -228,8 +232,8 @@
     <div id="full-sponsor">
         <div class="sponsor-inner">
             <div class="qr-placeholder">
-                <img src="/PayQrcode.png" alt="QR CODE">
-                </div>
+                <img src="/PayQrcode.png" alt="QR CODE" onerror="this.style.display='none';this.parentNode.innerText='QR CODE MISSING'">
+            </div>
             <p class="serif" style="font-size: 1.2rem; margin-bottom: 8px;">感谢这份认可</p>
             <p style="font-size: 0.85rem; color: var(--sub);">保持简单，保持纯粹</p>
             <div class="close-curtain" onclick="closeSponsor()">Dismiss — 关闭</div>
@@ -237,7 +241,7 @@
     </div>
 
     <script>
-
+        // 初始化时钟
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
@@ -245,33 +249,30 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-
+        // 主题切换：逻辑修复
         function toggleTheme() {
             const body = document.body;
             const toggleIcon = document.querySelector('.theme-toggle');
             
-            if (body.classList.contains('theme-dark')) {
-                body.classList.remove('theme-dark');
-                body.classList.add('theme-light');
-                toggleIcon.innerText = '○';
-            } else if (body.classList.contains('theme-light')) {
-                body.classList.remove('theme-light');
-                body.classList.add('theme-dark');
+            body.classList.toggle('dark');
+            
+            if (body.classList.contains('dark')) {
                 toggleIcon.innerText = '●';
+                localStorage.setItem('theme', 'dark');
             } else {
-
-                const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (isSystemDark) {
-                    body.classList.add('theme-light');
-                    toggleIcon.innerText = '○';
-                } else {
-                    body.classList.add('theme-dark');
-                    toggleIcon.innerText = '●';
-                }
+                toggleIcon.innerText = '○';
+                localStorage.setItem('theme', 'light');
             }
         }
 
+        // 恢复用户主题偏好
+        if (localStorage.getItem('theme') === 'dark' || 
+           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body.classList.add('dark');
+            document.querySelector('.theme-toggle').innerText = '●';
+        }
 
+        // 交互激活
         function handleActive(el) {
             const currentActive = document.querySelector('.is-active');
             if (currentActive === el) {
@@ -282,24 +283,29 @@
             }
         }
 
+        // 弹窗逻辑：增加滚动锁定
+        const sponsorModal = document.getElementById('full-sponsor');
         function openSponsor() {
-            document.getElementById('full-sponsor').classList.add('active');
+            sponsorModal.classList.add('active');
+            document.body.classList.add('locked');
             const currentActive = document.querySelector('.is-active');
             if (currentActive) currentActive.classList.remove('is-active');
         }
 
         function closeSponsor() {
-            document.getElementById('full-sponsor').classList.remove('active');
+            sponsorModal.classList.remove('active');
+            document.body.classList.remove('locked');
         }
 
+        // 优雅分享
         function copyLink(el) {
             const shareText = document.getElementById('share-text');
-            const originalText = shareText.innerText;
-            
-            if (originalText === '已复制 Link Copied') return; 
+            if (shareText.innerText.includes('Copied')) return; 
 
             navigator.clipboard.writeText(window.location.href).then(() => {
+                const originalText = shareText.innerText;
                 shareText.style.opacity = '0';
+                
                 setTimeout(() => {
                     shareText.innerText = '已复制 Link Copied';
                     shareText.style.color = 'var(--accent)';
@@ -308,7 +314,7 @@
                     setTimeout(() => {
                         shareText.style.opacity = '0';
                         setTimeout(() => {
-                            shareText.innerText = '复制主页链接';
+                            shareText.innerText = originalText;
                             shareText.style.color = 'inherit';
                             shareText.style.opacity = '1';
                         }, 300);
